@@ -1,4 +1,9 @@
-# Automatudo
+# Automatizando tudo de testes E2E.
+
+<img width="512" height="512" alt="automatudo" src="https://github.com/user-attachments/assets/1e185f5a-5ffb-45ff-bf39-3fe5a35bd74f" />
+
+
+# Sobre 
 
 Projeto de exemplo: Teste automatizado com Python, Behave (Cucumber) e Playwright.
 
