@@ -62,6 +62,7 @@ Este não foi o nosso caso naquela aplicação, mas atenção, ó peregrino desc
 |----------|--------------|
 | O time de automação *consegue* manter ritmo similar ao time de desenvolvimento | Procure automatizar 100% da aplicação |
 | O time de automação *não* consegue manter ritmo similar ao time de desenvolvimento | Procure automatizar os fluxos mais importantes |
+| Você está começando a automatizar um projeto legado, por onde você começa? | Foque nas **novas** features e nas mais importantes das legadas, em tese a aplicação legada já é "testada" pelo tempo |
 
 Se o time de automação está participando desde o começo, ótimo. 
 
