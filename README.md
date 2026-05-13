@@ -27,6 +27,7 @@ No vídeo você vai entender:
 - Como transformamos o código inicial em POM (*Page Object Model*)
    - Como você deve organizar as dependências entre os steps e as páginas.
 - A importância de ter um teste que faz retentativas e é resiliente.
+- Estratégia para cobertura de testes E2E.
 
 ## Sobre a resiliência
 Imagine o seguinte cenário:
@@ -49,6 +50,22 @@ Agora imagine o cenário abaixo:
 Objetivo neste cenário é testar o pagamento, e não o login. Se houver qualquer problema no começo deste cenário é interessante
 fazer o teste ser resiliente e fazer nova retentativa.
 
+## Estratégia para cobertura
+Segundo a pirâmide de testes abaixo, a maior cobertura de testes deveria ser com testes unitários. A menor cobertura deveria ser com testes E2E.
+
+<img width="777" height="389" alt="piramide" src="https://github.com/user-attachments/assets/aad75694-3f5b-46fd-956f-51b9003c3d57" />
+
+Assim, você deveria pensar em automatizar alguns fluxos principais e nada mais.
+
+Este não foi o nosso caso naquela aplicação, mas atenção, ó peregrino desconhecedor dos perigos presentes nesse caminho! Nossa recomendação seria:
+| Condição | Recomendação |
+|----------|--------------|
+| O time de automação *consegue* manter ritmo similar ao time de desenvolvimento | Procure automatizar 100% da aplicação |
+| O time de automação *não* consegue manter ritmo similar ao time de desenvolvimento | Procure automatizar os fluxos mais importantes |
+
+Se o time de automação está participando desde o começo, ótimo. 
+
+Se o produto já tem várias funcionalidades prontas, busque reforços para alguém fazer a automação enquanto alguém faz o trabalho manual.
 
 # Sobre o código
 <a id="sobre_codigo"/>
