@@ -68,6 +68,8 @@ Se o time de automação está participando desde o começo, ótimo.
 
 Se o produto já tem várias funcionalidades prontas, busque reforços para alguém fazer a automação enquanto alguém faz o trabalho manual.
 
+<img width="743" height="412" alt="ritmo" src="https://github.com/user-attachments/assets/83ba2243-d65e-4143-aeee-8468cf39cac9" />
+
 # Sobre o código
 <a id="sobre_codigo"/>
 
