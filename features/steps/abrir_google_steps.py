@@ -1,5 +1,6 @@
 from behave import given, when, then
 from playwright.sync_api import sync_playwright
+from hamcrest import assert_that, contains_string
 
 @given('que o usuário abre o navegador')
 def step_abrir_navegador(context):
@@ -13,6 +14,6 @@ def step_acessa_url(context, url):
 
 @then('a página do Google é exibida')
 def step_verifica_google(context):
-    assert "Google" in context.page.title()
+    assert_that(context.page.title(), contains_string("Login - Automatudo"))
     context.browser.close()
     context.playwright.stop()

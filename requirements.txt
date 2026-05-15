@@ -1,4 +1,5 @@
-behave:1.3.3
-playwright:1.59.0
-allure-behave:2.13.0
-behave-html-pretty-formatter:1.16.1
+behave==1.3.3
+playwright==1.59.0
+behave-html-pretty-formatter==1.16.1
+behave2cucumber==1.0.3
+pyhamcrest==2.1.0

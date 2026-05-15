@@ -1,7 +1,9 @@
 # language: en
 
-Feature: Abrir o Google
-  Scenario: Usuário acessa o Google
+Feature: Abrir tela de login
+  Background:
     Given que o usuário abre o navegador
-    When o usuário acessa "https://www.google.com"
+
+  Scenario: Usuário acessa o Google
+    When o usuário acessa "https://dfwandarti.github.io/automatudo/static/login.html"
     Then a página do Google é exibida
