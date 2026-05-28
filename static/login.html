@@ -151,21 +151,21 @@
             <h1>Login</h1>
             <div class="form-group">
                 <label for="usuario">Usuário</label>
-                <input type="text" id="usuario" placeholder="admin" required>
+                <input type="text" id="usuario" data-testid="usuario" placeholder="admin" required>
             </div>
             <div class="form-group">
                 <label for="senha">Senha</label>
-                <input type="password" id="senha" placeholder="••••••••" required>
+                <input type="password" id="senha" data-testid="senha" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="login-btn">Entrar</button>
-            <div class="error-message" id="errorMessage">Usuário ou senha inválidos</div>
+            <button type="submit" class="login-btn" data-testid="botao-entrar">Entrar</button>
+            <div class="error-message" id="errorMessage" data-testid="mensagem-erro">Usuário ou senha inválidos</div>
         </form>
     </div>
 
     <!-- Success Screen -->
     <div id="successScreen" class="success-screen">
-        <div class="success-message">✓ Você logou com sucesso</div>
-        <button class="logout-btn" onclick="handleLogout()">Sair</button>
+        <div class="success-message" data-testid="mensagem-sucesso">✓ Você logou com sucesso</div>
+        <button class="logout-btn" data-testid="botao-sair" onclick="handleLogout()">Sair</button>
     </div>
 
     <script>
