@@ -1,3 +1,5 @@
+from playwright.sync_api import Page
+
 from python.pages.base_page import BasePage
 from python.locators.login_locators import LoginLocators
 
@@ -5,7 +7,7 @@ from python.locators.login_locators import LoginLocators
 class LoginPage(BasePage):
     """Login Page Object"""
 
-    def __init__(self, page):
+    def __init__(self, page: Page):
         super().__init__(page)
         self.locators = LoginLocators()
 
@@ -46,4 +48,7 @@ class LoginPage(BasePage):
     def verify_invalid_credentials(self):
         """Verify invalid credentials message is shown"""
         assert self.is_invalid_message_visible(), "Invalid credentials message not found!"
+
+    def navigate_to(self):
+        self.page.goto("https://dfwandarti.github.io/automatudo/static/login.html")
 

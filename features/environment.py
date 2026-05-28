@@ -1,4 +1,39 @@
 # features/environment.py
+from behave.cucumber_expression import (
+    ParameterType,
+    define_parameter_type,
+    define_parameter_type_with
+)
+from playwright.sync_api import sync_playwright
+
+from python.page_field.page_field import PageField
+
+define_parameter_type(ParameterType(
+    name="pageField",
+    regexp="[a-zA-Z-]+",
+    type=PageField,
+    transformer=PageField.from_display_name
+))
+
+
+def before_scenario(context, scenario):
+    """Inicializa o navegador e page objects antes de cada cenário"""
+    init_playwright(context)
+
+
+def init_playwright(context):
+    context.playwright = sync_playwright().start()
+    context.browser = context.playwright.chromium.launch(headless=False)
+    context.page = context.browser.new_page()
+
+
+def after_scenario(context, scenario):
+    """Limpa recursos após cada cenário"""
+    if hasattr(context, 'browser'):
+        context.browser.close()
+    if hasattr(context, 'playwright'):
+        context.playwright.stop()
+
 
 def after_all(context):
     # 1. Varre todos os formatadores ativos na execução do Behave

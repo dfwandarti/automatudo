@@ -30,4 +30,3 @@ class BasePage:
     def wait_for_load_state(self, state: str = "networkidle"):
         """Wait for page to load"""
         self.page.wait_for_load_state(state)
-
