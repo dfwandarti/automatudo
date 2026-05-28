@@ -2,6 +2,7 @@ import behave
 from behave import given, when, then
 from playwright.sync_api import sync_playwright
 from hamcrest import assert_that, contains_string
+from python.pages.login_page import LoginPage
 
 @given('que o usuário abriu o navegador')
 def step_abrir_navegador(context):
@@ -21,27 +22,27 @@ def step_verifica_google(context):
 
 
 @when("o usuário loga como admin")
-def step_impl(context: behave.runner.Context):
+def step_login_admin(context: behave.runner.Context):
     context.page.goto("https://dfwandarti.github.io/automatudo/static/login.html")
-    context.page.fill("#usuario", "admin")
-    context.page.fill("#senha", "admin")
-    context.page.click("//button")
+    login_page = LoginPage(context.page)
+    login_page.login("admin", "admin")
 
 @when("o usuário loga como zequinha")
-def step_impl(context: behave.runner.Context):
+def step_login_zequinha(context: behave.runner.Context):
     context.page.goto("https://dfwandarti.github.io/automatudo/static/login.html")
-    context.page.fill("#usuario", "zequinha")
-    context.page.fill("#senha", "zequinha")
-    context.page.click("//button")
+    login_page = LoginPage(context.page)
+    login_page.login("zequinha", "zequinha")
 
 @then("o usuário estará logado")
-def step_impl(context: behave.runner.Context):
-    success_message = context.page.get_by_text("✓ Você logou com sucesso")
-    success_message.wait_for(timeout=5000)
-    assert success_message.is_visible()
+def step_verify_login(context: behave.runner.Context):
+    login_page = LoginPage(context.page)
+    login_page.verify_login_success()
+    context.browser.close()
+    context.playwright.stop()
 
 @then("o usuário verá mensagem de usuário inválido")
-def step_impl(context: behave.runner.Context):
-    success_message = context.page.get_by_text("Usuário ou senha inválidos")
-    success_message.wait_for(timeout=5000)
-    assert success_message.is_visible()
+def step_verify_invalid_login(context: behave.runner.Context):
+    login_page = LoginPage(context.page)
+    login_page.verify_invalid_credentials()
+    context.browser.close()
+    context.playwright.stop()
