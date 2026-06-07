@@ -3,7 +3,7 @@ display_name_to_test_id = {
   "login - input senha": "senha",
   "login - botão logar": "botao-entrar",
   "login - mensagem erro": "mensagem-erro",
-  "home - mensagem sucesso": "mensagem-sucesso"
+  "home - mensagem sucesso": "mensagem-sucesso",
 }
 
 class DisplayNameToTestId:
