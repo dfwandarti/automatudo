@@ -10,6 +10,16 @@ class PageField:
     xpath: str = None
     locator: Locator
 
+    _instance_allowed = False
+
+    def __new__(cls, page: Page, display_name: str):
+        if not cls._instance_allowed:
+            raise TypeError(
+                f"❌ Não pode instanciar {cls.__name__} diretamente!\n"
+                f"Use {cls.__name__}.create() em vez disso."
+            )
+        return super().__new__(cls)
+
     def __init__(self, page: Page, display_name: str):
         super().__init__()
         self.page = page
@@ -28,8 +38,8 @@ class PageField:
         raise ValueError(f"Display name '{display_name}' not found in mapping. Review display_name_to_test_id.py and display_name_to_xpath.py.")
 
     @classmethod
-    def from_display_name(cls, display_name: str) -> PageField | None:
-        return None
+    def from_display_name(cls, page: Page, display_name: str) -> PageField:
+        return PageField(page, display_name)
 
     def press_sequentially(self, text: str) -> None:
         self.locator.press_sequentially(text, delay=300)

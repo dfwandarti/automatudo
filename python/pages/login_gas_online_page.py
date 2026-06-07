@@ -14,5 +14,4 @@ class LoginPageGasOnline(BasePage):
 
     def navigate_to(self):
         self.page.goto("https://gasonline.galp.com/")
-        PageField(self.page, "login gas online - botão aceitar cookies").click()
-
+        PageField.from_display_name(self.page, "login gas online - botão aceitar cookies").click()
