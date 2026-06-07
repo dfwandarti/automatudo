@@ -30,3 +30,6 @@ class PageField:
 
     def get_text(self) -> str | None:
         return self.locator.text_content()
+
+    def get_input_text(self):
+        return self.locator.input_value()

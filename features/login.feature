@@ -11,3 +11,12 @@ Feature: Abrir tela de login
     When Usuário clica no botão login - botão logar
     Then Campo home - mensagem sucesso terá texto ✓ Você logou com sucesso
 
+  Scenario: Usuário loga como zequinha
+    Given Usuário digitou zequinha no campo login - input user
+    And Usuário digitou zequnha no campo login - input senha
+    When Usuário clica no botão login - botão logar
+    Then Campo home - mensagem erro terá texto Invalid credentials message not found!
+    
+  Scenario: Valida tamanho do login
+    Given Usuário digitou abcdefghikz no campo login - input user
+    Then Input login - input user terá texto abcdefghik
