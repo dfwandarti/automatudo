@@ -10,6 +10,7 @@ def step_impl(context: behave.runner.Context, text: str, display_name: str):
     field: PageField = PageField(context.page, display_name)
     field.press_sequentially(text)
 
+@Given("Usuário clicou no botão {display_name}")
 @when("Usuário clica no botão {display_name}")
 def step_impl(context: behave.runner.Context, display_name: str):
     field: PageField = PageField(context.page, display_name)
