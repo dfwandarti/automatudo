@@ -46,6 +46,11 @@ class BrowserConfig:
         return device
 
     @classmethod
+    def is_responsive(cls) -> bool:
+        device = cls.get_device_type()
+        return device in ["mobile", "tablet"]
+
+    @classmethod
     def get_config(cls, device_type: Optional[str] = None) -> Dict[str, Any]:
         """Retorna a configuração do browser para o device especificado
 

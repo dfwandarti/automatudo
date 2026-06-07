@@ -1,8 +1,8 @@
 from playwright.sync_api import Page
 
-from python.page_field.page_field import PageField
-from python.pages.base_page import BasePage
+from page_field.from_display_name import PageFieldFactory
 from python.locators.login_locators import LoginLocators
+from python.pages.base_page import BasePage
 
 
 class LoginPageGasOnline(BasePage):
@@ -14,4 +14,4 @@ class LoginPageGasOnline(BasePage):
 
     def navigate_to(self):
         self.page.goto("https://gasonline.galp.com/")
-        PageField.from_display_name(self.page, "login gas online - botão aceitar cookies").click()
+        PageFieldFactory.from_display_name(self.page, "login gas online - botão aceitar cookies").click()
