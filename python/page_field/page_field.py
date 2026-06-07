@@ -29,7 +29,19 @@ class PageField:
         self.locator.click(delay=300)
 
     def get_text(self) -> str | None:
+        self.confirm_is_visible()
         return self.locator.text_content()
 
     def get_input_text(self):
+        self.confirm_is_visible()
+        self.confirm_is_enabled()
         return self.locator.input_value()
+
+    def confirm_is_visible(self):
+        if not self.locator.is_visible():
+            raise ValueError(f"Display name '{self.display_name}' not visible in page.")
+
+    def confirm_is_enabled(self):
+        if not self.locator.is_enabled():
+            raise ValueError(f"Display name '{self.display_name}' not enabled in page.")
+

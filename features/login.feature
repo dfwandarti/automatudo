@@ -15,8 +15,8 @@ Feature: Abrir tela de login
     Given Usuário digitou zequinha no campo login - input user
     And Usuário digitou zequnha no campo login - input senha
     When Usuário clica no botão login - botão logar
-    Then Campo home - mensagem erro terá texto Invalid credentials message not found!
-    
+    Then Campo login - mensagem erro terá texto Usuário ou senha inválidos
+
   Scenario: Valida tamanho do login
     Given Usuário digitou abcdefghikz no campo login - input user
     Then Input login - input user terá texto abcdefghik
