@@ -7,6 +7,7 @@ from behave.cucumber_expression import (
 from playwright.sync_api import sync_playwright
 
 from python.page_field.page_field import PageField
+from python.config.browser_config import BrowserConfig
 
 define_parameter_type(ParameterType(
     name="pageField",
@@ -24,7 +25,25 @@ def before_scenario(context, scenario):
 def init_playwright(context):
     context.playwright = sync_playwright().start()
     context.browser = context.playwright.chromium.launch(headless=False)
-    context.page = context.browser.new_page()
+
+    # Carregar configuração de device/viewport
+    device_type = BrowserConfig.get_device_type()
+    config = BrowserConfig.get_config(device_type)
+
+    # Imprimir informações de configuração
+    BrowserConfig.print_config_info()
+
+    # Criar a página com o viewport configurado
+    context.page = context.browser.new_page(
+        viewport=config.get("viewport"),
+        device_scale_factor=config.get("device_scale_factor", 1),
+        is_mobile=config.get("is_mobile", False),
+        has_touch=config.get("has_touch", False),
+        user_agent=config.get("user_agent")
+    )
+
+    # Armazenar device type no context para referência em steps
+    context.device_type = device_type
 
 
 def after_scenario(context, scenario):

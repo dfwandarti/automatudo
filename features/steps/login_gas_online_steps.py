@@ -1,7 +1,7 @@
 import behave.runner
 from behave import *
 
-from pages.login_page_gas_online import LoginPageGasOnline
+from python.pages.login_gas_online_page import LoginPageGasOnline
 
 
 @given("Usuário navegou para tela de login gás online")
