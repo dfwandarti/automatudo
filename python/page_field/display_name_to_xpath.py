@@ -1,5 +1,6 @@
 display_name_to_xpath = {
     "login gas online - botão entrar": "//*[text()='Entrar']",
+    "login gas online - menu sanduíche": "//*[@class='menu-icon']",
     "login gas online - botão aceitar cookies": "//*[@id='onetrust-accept-btn-handler']"
 }
 
