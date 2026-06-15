@@ -6,7 +6,7 @@ from behave.cucumber_expression import (
 )
 from playwright.sync_api import sync_playwright
 
-from page_field.from_display_name import PageFieldFactory
+from python.page_field.from_display_name import PageFieldFactory
 from python.page_field.page_field import PageField
 from python.config.browser_config import BrowserConfig
 

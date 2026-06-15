@@ -1,9 +1,9 @@
 from playwright.sync_api import Page
 
-from config.browser_config import BrowserConfig
-from page_field.page_field import PageField
-from page_field.page_field_entrar import PageFieldEntrar
-from page_field.page_field_login import PageFieldLogin
+from python.config.browser_config import BrowserConfig
+from python.page_field.page_field import PageField
+from python.page_field.page_field_entrar import PageFieldEntrar
+from python.page_field.page_field_login import PageFieldLogin
 
 
 class PageFieldFactory:

@@ -1,6 +1,6 @@
 from playwright.sync_api import Page
 
-from page_field.from_display_name import PageFieldFactory
+from python.page_field.from_display_name import PageFieldFactory
 from python.locators.login_locators import LoginLocators
 from python.pages.base_page import BasePage
 

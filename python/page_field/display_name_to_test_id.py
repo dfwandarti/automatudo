@@ -4,6 +4,7 @@ display_name_to_test_id = {
   "login - botão logar": "botao-entrar",
   "login - mensagem erro": "mensagem-erro",
   "home - mensagem sucesso": "mensagem-sucesso",
+  "login - logo wesayso": "wesayso-icon",
 }
 
 class DisplayNameToTestId:

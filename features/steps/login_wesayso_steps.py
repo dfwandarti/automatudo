@@ -7,7 +7,3 @@ from python.pages.login_wesayso_page import LoginPageWesayso
 def step_impl(context: behave.runner.Context):
     context.login_page = LoginPageWesayso(context.page)
     context.login_page.navigate_to()
-
-@Then("Logo da wesayso é exibido corretamente")
-def assert_logo(context: behave.runner.Context):
-    pass
