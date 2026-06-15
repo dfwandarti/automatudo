@@ -5,5 +5,17 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "gs-behave-bdd.importStrategy": "fromEnvironment"
+    "gs-behave-bdd.importStrategy": "fromEnvironment",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "python.analysis.inlayHints.variableTypes": false,
+    "python.analysis.inlayHints.functionReturnTypes": false,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportUnknownVariableType": "none",
+        "reportUnknownMemberType": "none",
+        "reportUnknownArgumentType": "none",
+        "reportUnknownParameterType": "none",
+        "reportOptionalMemberAccess": "warning",
+        "reportGeneralTypeIssues": "warning"
+    }
 }

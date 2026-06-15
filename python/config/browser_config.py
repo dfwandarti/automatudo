@@ -103,3 +103,12 @@ class BrowserConfig:
         print(f"[Browser Config] Mobile: {config.get('is_mobile', False)}")
         print(f"{'='*60}\n")
 
+    @classmethod
+    def get_device_type(cls) -> str:
+        """Retorna o tipo de device (desktop/mobile/tablet)
+
+        Priority:
+        1. Variável de ambiente BROWSER_DEVICE
+        2. Valor padrão (mobile)
+        """
+        return cls._default_device

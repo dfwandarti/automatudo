@@ -1,7 +1,6 @@
 from playwright.sync_api import Page
 
 from python.pages.base_page import BasePage
-from python.locators.login_locators import LoginLocators
 
 
 class LoginPage(BasePage):

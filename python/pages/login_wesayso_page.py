@@ -1,6 +1,5 @@
 from playwright.sync_api import Page
 
-from python.locators.login_locators import LoginLocators
 from python.pages.base_page import BasePage
 
 
@@ -9,7 +8,6 @@ class LoginPageWesayso(BasePage):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self.locators = LoginLocators()
 
     def navigate_to(self):
         self.page.goto("https://dfwandarti.github.io/automatudo/static/login_wesayso.html")
