@@ -10,14 +10,6 @@ from python.page_field.from_display_name import PageFieldFactory
 from python.page_field.page_field import PageField
 from python.config.browser_config import BrowserConfig
 
-define_parameter_type(ParameterType(
-    name="pageField",
-    regexp="[a-zA-Z-]+",
-    type=PageField,
-    transformer=PageFieldFactory.from_display_name
-))
-
-
 def before_scenario(context, scenario):
     """Inicializa o navegador e page objects antes de cada cenário"""
     init_playwright(context)

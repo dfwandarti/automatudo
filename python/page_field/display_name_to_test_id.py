@@ -10,4 +10,4 @@ display_name_to_test_id = {
 class DisplayNameToTestId:
     @classmethod
     def get_data_test_id(cls, display_name: str) -> str | None:
-        return display_name_to_test_id.get(display_name.replace("\"", ""))
+        return display_name_to_test_id.get(display_name)

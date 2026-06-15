@@ -5,7 +5,7 @@ from python.page_field.page_field import PageField
 
 class PageFieldLogin(PageField):
     def __init__(self, page: Page, display_name: str) -> None:
-        super().__init__(page, "login gas online - botão entrar")
+        super().__init__(page, display_name)
 
     def click(self):
         current_user: str = PageField(self.page, "login - input user").get_input_text()

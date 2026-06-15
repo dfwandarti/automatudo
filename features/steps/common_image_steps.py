@@ -14,12 +14,3 @@ def assert_same_image(context: behave.runner.Context, display_name: str):
     after: bytes = page.screenshot(clip=field.locator.bounding_box())
     
     assert before == after, "The images do not match"
-
-@then('Imagem2 login - logo wesayso é como esperada')
-def step_then(context: behave.runner.Context):
-    page: Page = context.page # type: ignore
-        
-    before: bytes = page.screenshot()
-    after: bytes = page.screenshot()
-    
-    assert before == after, "The images do not match"

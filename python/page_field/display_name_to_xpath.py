@@ -7,4 +7,4 @@ display_name_to_xpath = {
 class DisplayNameToXpath:
     @classmethod
     def get_xpath(cls, display_name: str) -> str | None:
-        return display_name_to_xpath.get(display_name.replace("\"", ""))
+        return display_name_to_xpath.get(display_name)
