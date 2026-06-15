@@ -7,3 +7,4 @@ Feature: Abrir tela de login do wesayso
 
   Scenario: Verifica se logo está correto
     Then Imagem login - logo wesayso é como esperada
+ 

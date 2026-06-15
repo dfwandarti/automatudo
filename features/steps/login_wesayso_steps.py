@@ -1,5 +1,5 @@
 import behave.runner
-from behave import *
+from behave import given
 
 from python.pages.login_wesayso_page import LoginPageWesayso
 

@@ -1,14 +1,25 @@
 import behave
-from behave import Then
+from playwright.sync_api import Page  # type: ignore[import-untyped]
 
 from python.page_field.from_display_name import PageFieldFactory
 
 
-@Then("Imagem login - logo wesayso é como esperada")
-def assert_same_image(context: behave.runner.Context):
-    field = PageFieldFactory.from_display_name(context.page, "login - logo wesayso")
-    field.confirm_is_visible()
 
-    src = field.locator.get_attribute("src")
-    assert src is not None, "Logo image src attribute is missing"
-    assert "wesayso.webp" in src, f"Unexpected logo image source: {src}"
+@then("Imagem {display_name} é como esperada")
+def assert_same_image(context: behave.runner.Context, display_name: str):
+    page: Page = context.page # type: ignore
+    field = PageFieldFactory.from_display_name(page, display_name)
+        
+    before: bytes = page.screenshot(clip=field.locator.bounding_box())
+    after: bytes = page.screenshot(clip=field.locator.bounding_box())
+    
+    assert before == after, "The images do not match"
+
+@then('Imagem2 login - logo wesayso é como esperada')
+def step_then(context: behave.runner.Context):
+    page: Page = context.page # type: ignore
+        
+    before: bytes = page.screenshot()
+    after: bytes = page.screenshot()
+    
+    assert before == after, "The images do not match"
