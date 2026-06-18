@@ -1,4 +1,6 @@
 # features/environment.py
+import logging
+
 from behave.cucumber_expression import (
     ParameterType,
     define_parameter_type,
@@ -10,6 +12,9 @@ from python.page_field.from_display_name import PageFieldFactory
 from python.page_field.page_field import PageField
 from python.config.browser_config import BrowserConfig
 
+def before_all(context):
+    logging.basicConfig(level=logging.INFO, force=True)
+    
 def before_scenario(context, scenario):
     """Inicializa o navegador e page objects antes de cada cenário"""
     init_playwright(context)
