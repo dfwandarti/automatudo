@@ -5,6 +5,7 @@ display_name_to_test_id = {
   "login - mensagem erro": "mensagem-erro",
   "home - mensagem sucesso": "mensagem-sucesso",
   "login - logo wesayso": "wesayso-icon",
+  "login - logo acme": "acme-icon",
 }
 
 class DisplayNameToTestId:

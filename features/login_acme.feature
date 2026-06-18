@@ -6,5 +6,5 @@ Feature: Abrir tela de login do acme
     Given Usuário navegou para tela de login da acme
 
   Scenario: Verifica se logo está correto
-    Then Imagem login - logo wesayso é como esperada
+    Then Imagem login - logo acme é como esperada
  
