@@ -15,7 +15,7 @@ from python.config.browser_config import BrowserConfig
 from python.page_field.from_display_name import PageFieldFactory
 
 SNAPSHOTS_DIR = Path(__file__).parents[2] / "static" / "snapshots"
-DIFF_THRESHOLD = 0.05  # allow up to 1% of pixels to differ
+DIFF_THRESHOLD = 0.05  # allow up to 5% of pixels to differ
 
 
 @then("Imagem {display_name} é como esperada")  # type: ignore[misc]
