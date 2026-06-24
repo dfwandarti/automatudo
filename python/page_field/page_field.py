@@ -1,5 +1,6 @@
 from playwright.sync_api import Page, Locator
 
+from .yolo_generate_dataset import YoloDataset
 from .display_name_to_test_id import DisplayNameToTestId
 from .display_name_to_xpath import DisplayNameToXpath
 
@@ -16,6 +17,7 @@ class PageField:
         self.page = page
         self.display_name = display_name
         self.locator: Locator = self.get_locator(display_name)
+        YoloDataset.generate_dataset(display_name, self.page, self.locator)
 
     def get_locator(self, display_name: str):
         self.data_test_id: str | None = DisplayNameToTestId.get_data_test_id(display_name)

@@ -1,0 +1,10 @@
+# custom_data.yaml
+path: ../yolo_dataset                # Diretório raiz do dataset
+train: images/train                  # Caminho relativo para imagens de treino
+val: images/val                      # Caminho relativo para imagens de validação
+test: images/test                    # Caminho relativo para imagens de teste
+
+# Mapeamento de classes (índice -> nome)
+names:
+  0: logo wesayso
+  1: logo acme

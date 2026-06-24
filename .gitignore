@@ -220,3 +220,6 @@ __marimo__/
 /allure-results/
 
 /static/snapshots/*actual.png
+/runs/*
+yolo_dataset/yolo11n.pt
+*.cache
