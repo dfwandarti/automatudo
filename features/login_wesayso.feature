@@ -7,4 +7,5 @@ Feature: Abrir tela de login do wesayso
 
   Scenario: Verifica se logo está correto
     Then Imagem login - logo wesayso é como esperada
-    #And Apenas uma imagem de logo é encontrada#
+    And A imagem logo wesayso é encontrada 1 vez
+    And A imagem logo acme é encontrada 0 vezes

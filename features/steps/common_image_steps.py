@@ -17,24 +17,10 @@ from python.page_field.from_display_name import PageFieldFactory
 
 SNAPSHOTS_DIR = Path(__file__).parents[2] / "static" / "snapshots"
 DIFF_THRESHOLD = 0.05  # allow up to 5% of pixels to differ
-YOLO_MODEL_PATH = Path(__file__).parents[2] / "yolo_models" / "logos-2026-06-23.pt"
+YOLO_MODEL_PATH = Path(__file__).parents[2] / "yolo_models" / "logos-2026-06-24.pt"
 _yolo_model: YOLO | None = None
 
 
-@then("Apenas uma imagem de logo é encontrada") # type: ignore[misc]
-def assert_single_logo_image(context: Any) -> None:
-    page: Page = context.page
-    screenshot_bytes: bytes = page.screenshot()
-    image = cv2.imdecode(np.frombuffer(screenshot_bytes, np.uint8), cv2.IMREAD_COLOR)
-
-    results = _get_yolo_model().predict(image, verbose=False)
-    print(results)
-    logger.info(f"[YOLO] Results: {results}")
-    boxes = results[0].boxes
-    count = len(boxes) if boxes is not None else 0
-
-    assert count == 1, f"Expected exactly 1 logo, found {count}."
-    
 @then("Imagem {display_name} é como esperada")  # type: ignore[misc]
 def assert_same_image(context: Any, display_name: str) -> None:
     page: Page = context.page  # type: ignore
@@ -96,8 +82,3 @@ def _display_name_to_filepath(display_name: str, actual_or_expected: str) -> Pat
     filename = f"{_sanitize(display_name)}__{_sanitize(device_type)}__{actual_or_expected}.png"
     return SNAPSHOTS_DIR / filename
 
-def _get_yolo_model() -> YOLO:
-    global _yolo_model
-    if _yolo_model is None:
-        _yolo_model = YOLO(str(YOLO_MODEL_PATH))
-    return _yolo_model

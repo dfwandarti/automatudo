@@ -3,6 +3,6 @@ playwright==1.59.0
 behave-html-pretty-formatter==1.16.1
 behave2cucumber==1.0.3
 pyhamcrest==2.1.0
-opencv-python==4.11.0.86
+opencv-python-headless==4.11.0.86
 numpy==2.2.6
 ultralytics==8.4.75
