@@ -10,7 +10,7 @@ class BrowserConfig:
 
     _config: Dict[str, Any] = {}
     _loaded: bool = False
-    _default_device: str = "desktop"
+    _default_device: str = "mobile"
 
     @classmethod
     def _load_config(cls) -> None:

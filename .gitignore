@@ -223,3 +223,5 @@ __marimo__/
 /runs/*
 yolo_dataset/yolo11n.pt
 *.cache
+/yolo_dataset/images/*
+/yolo_dataset/labels/*
