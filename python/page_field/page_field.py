@@ -1,6 +1,6 @@
 from playwright.sync_api import Page, Locator
 
-from .yolo_generate_dataset import YoloDataset
+from ..yolo.yolo_generate_dataset import YoloDataset
 from .display_name_to_test_id import DisplayNameToTestId
 from .display_name_to_xpath import DisplayNameToXpath
 

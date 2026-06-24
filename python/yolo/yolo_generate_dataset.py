@@ -1,4 +1,5 @@
 import random
+import re
 import uuid
 from pathlib import Path
 
@@ -7,14 +8,14 @@ import numpy as np
 from playwright.sync_api import Page, Locator
 
 TRAIN_RATIO = 0.7
-TEST_RATIO = 0.9
+VAL_RATIO = 0.9
 OUTPUT_DIR = Path("yolo_dataset")
 
 # IMPORTANT:
 # Every time you add a new yolo class, update custom.yaml on yolo_datasets folder.
 display_name_to_yolo_class = {
-    "login - logo wesayso": 0,
-    "login - logo acme": 1,
+    # "login - logo wesayso": 0,
+    # "login - logo acme": 1,
 }
 
 
@@ -31,7 +32,7 @@ class YoloDataset:
             return
 
         bbox = locator.bounding_box()
-        if bbox is None:
+        if bbox is None or bbox['width'] == 0 or bbox['height'] == 0:
             return
 
         screenshot_bytes = page.screenshot()
@@ -55,7 +56,7 @@ class YoloDataset:
         images_dir.mkdir(parents=True, exist_ok=True)
         labels_dir.mkdir(parents=True, exist_ok=True)
 
-        name = f"{display_name.replace(' ', '_')}_{uuid.uuid4()}"
+        name = f"{re.sub(r'[^a-zA-Z0-9]', '_', display_name)}_{uuid.uuid4()}"
         cv2.imwrite(str(images_dir / f"{name}.jpg"), img)
 
         label = f"{yolo_class} {x_center:.6f} {y_center:.6f} {norm_w:.6f} {norm_h:.6f}"
@@ -66,7 +67,7 @@ class YoloDataset:
         train_val_or_test = random.random()
         if train_val_or_test < TRAIN_RATIO:
             split = 'train'
-        elif train_val_or_test < TEST_RATIO:
+        elif train_val_or_test < VAL_RATIO:
             split = 'val'
         else:
             split = 'test'
