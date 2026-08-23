@@ -26,7 +26,7 @@ def assert_single_logo_image(context: Any, class_name: str, expectedCount: int) 
 
     logger.info(f"[YOLO] Detectados: {_format_detection_summary(detected_objects)}")
     
-    assert detected_objects is not None, "Não foi possível detectar objetos na página."
+    assert detected_objects is not None, "Não foi possível detectar objet1os na página."
     actualCount = detected_objects.get(class_name, {}).get("count", 0)
     logger.info(f"expectedCount: {expectedCount} {type(expectedCount)}, actualCount: {actualCount} {type(actualCount)}")
     assert actualCount == expectedCount, f"Esperado {expectedCount} ocorrência(s) de '{class_name}', mas YOLO encontrou {actualCount} > {expectedCount == actualCount}. Resumo: {_format_detection_summary(detected_objects)}"

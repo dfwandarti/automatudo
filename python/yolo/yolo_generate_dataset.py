@@ -14,8 +14,8 @@ OUTPUT_DIR = Path("yolo_dataset")
 # IMPORTANT:
 # Every time you add a new yolo class, update custom.yaml on yolo_datasets folder.
 display_name_to_yolo_class = {
-    # "login - logo wesayso": 0,
-    # "login - logo acme": 1,
+    "login - logo wesayso": 0,
+    "login - logo acme": 1,
 }
 
 

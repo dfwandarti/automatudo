@@ -17,5 +17,24 @@
         "reportUnknownParameterType": "none",
         "reportOptionalMemberAccess": "warning",
         "reportGeneralTypeIssues": "warning"
-    }
+    },
+    "gs-behave-bdd.completedMigrations": [
+        "projectPath-from-behavevsc",
+        "runParallel-from-behavevsc",
+        "justMyCode-from-behavevsc",
+        "xRay-from-behavevsc",
+        "verboseLogging-from-behavevsc",
+        "multiRootRunWorkspacesInParallel-from-behavevsc",
+        "importStrategy-from-behavevsc",
+        "stepDefinitionSearchTimeout-from-behavevsc",
+        "discoveryDepth-from-behavevsc",
+        "discoveryStopOnFirstHit-from-behavevsc",
+        "activeEnvVarPreset-from-behavevsc",
+        "featuresPath-self",
+        "featuresPath-from-behavevsc",
+        "suppressMultiConfig-self",
+        "suppressedNotifications-from-behavevsc",
+        "envVarPresets-from-behavevsc",
+        "envVarOverrides-from-behavevsc"
+    ]
 }
