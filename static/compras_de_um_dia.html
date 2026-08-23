@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras de um dia - Automatudo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 20px 40px;
+        }
+
+        .logo {
+            height: 50px;
+            max-width: 200px;
+        }
+
+        .compras-screen {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .compras-screen h1 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .compras-table {
+            width: 100%;
+            max-width: 700px;
+            border-collapse: collapse;
+            color: #fff;
+        }
+
+        .compras-table th,
+        .compras-table td {
+            padding: 12px;
+            border-bottom: 1px solid #444;
+            text-align: left;
+        }
+
+        .compras-table th {
+            color: #ccc;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://www.objective.com.br/assets/logo-objective.svg" alt="Objective Logo" class="logo" onerror="this.style.display='none'">
+    </div>
+
+    <div id="comprasDeUmDiaScreen" class="compras-screen">
+        <h1>Compras de um dia</h1>
+        <table class="compras-table" data-testid="tabela-compras">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Data</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaComprasBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const compras = [
+            { produto: "Fraldas descartáveis", quantidade: 2, data: "1974-11-23", valor: "R$ 32,50" },
+        ];
+
+        function renderCompras(lista) {
+            const tbody = document.getElementById('tabelaComprasBody');
+            tbody.innerHTML = lista.map((compra) => `
+                <tr>
+                    <td>${compra.produto}</td>
+                    <td>${compra.quantidade}</td>
+                    <td>${formatarData(compra.data)}</td>
+                    <td>${compra.valor}</td>
+                </tr>
+            `).join('');
+        }
+
+        function formatarData(isoDate) {
+            const [ano, mes, dia] = isoDate.split('-');
+            return `${dia}/${mes}/${ano}`;
+        }
+
+        renderCompras(compras);
+    </script>
+</body>
+</html>

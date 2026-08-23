@@ -106,109 +106,6 @@
             font-size: 14px;
             display: none;
         }
-
-        .home-screen {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex: 1;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .home-screen h1 {
-            color: #fff;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-
-        .welcome-message {
-            color: #00cc66;
-            font-size: 20px;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        .home-actions {
-            display: flex;
-            gap: 16px;
-        }
-
-        .action-btn {
-            padding: 12px 30px;
-            background-color: #0066cc;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .action-btn:hover {
-            background-color: #0052a3;
-        }
-
-        .compras-screen {
-            display: none;
-            flex: 1;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px;
-        }
-
-        .compras-screen h1 {
-            color: #fff;
-            font-size: 28px;
-            margin-bottom: 30px;
-        }
-
-        .compras-search {
-            background-color: #1a1a1a;
-            padding: 24px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .compras-search label {
-            display: block;
-            color: #ccc;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .compras-search input[type="date"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #444;
-            border-radius: 4px;
-            background-color: #2a2a2a;
-            color: #fff;
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
-        .compras-table {
-            width: 100%;
-            max-width: 700px;
-            border-collapse: collapse;
-            color: #fff;
-        }
-
-        .compras-table th,
-        .compras-table td {
-            padding: 12px;
-            border-bottom: 1px solid #444;
-            text-align: left;
-        }
-
-        .compras-table th {
-            color: #ccc;
-            font-weight: 600;
-        }
     </style>
 </head>
 <body>
@@ -216,7 +113,6 @@
         <img src="https://www.objective.com.br/assets/logo-objective.svg" alt="Objective Logo" class="logo" onerror="this.style.display='none'">
     </div>
 
-    <!-- Login Screen -->
     <div id="loginScreen" class="login-container">
         <form class="login-form" onsubmit="handleLogin(event)">
             <h1>Login</h1>
@@ -233,44 +129,7 @@
         </form>
     </div>
 
-    <!-- Home Screen -->
-    <div id="homeScreen" class="home-screen">
-        <h1>Home</h1>
-        <div class="welcome-message" id="welcomeMessage" data-testid="mensagem-sucesso"></div>
-        <div class="home-actions">
-            <button class="action-btn" data-testid="botao-minha-conta">Minha conta</button>
-            <button class="action-btn" data-testid="botao-minhas-compras" onclick="showMinhasCompras()">Minhas compras</button>
-        </div>
-    </div>
-
-    <!-- Minhas Compras Screen -->
-    <div id="minhasComprasScreen" class="compras-screen">
-        <h1>Minhas compras</h1>
-        <div class="compras-search">
-            <label for="dataPesquisa">Pesquisa compras de um dia</label>
-            <input type="date" id="dataPesquisa" data-testid="input-data-pesquisa">
-            <button class="action-btn" data-testid="botao-pesquisar" onclick="handlePesquisarCompras()">Pesquisar</button>
-        </div>
-        <table class="compras-table" data-testid="tabela-compras">
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Data</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody id="tabelaComprasBody"></tbody>
-        </table>
-    </div>
-
     <script>
-        const compras = [
-            { produto: "Fone de ouvido bluetooth", quantidade: 1, data: "2024-05-10", valor: "R$ 129,90" },
-            { produto: "Caderno universitário", quantidade: 3, data: "2024-03-02", valor: "R$ 45,00" },
-            { produto: "Fraldas descartáveis", quantidade: 2, data: "1974-11-23", valor: "R$ 32,50" },
-        ];
-
         function handleLogin(event) {
             event.preventDefault();
 
@@ -279,45 +138,11 @@
             const errorMessage = document.getElementById('errorMessage');
 
             if (usuario === 'admin' && senha === 'admin') {
-                // Hide login screen and show home screen
-                document.getElementById('welcomeMessage').textContent = `Bem vindo senhor ${usuario}`;
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('homeScreen').style.display = 'flex';
-                errorMessage.style.display = 'none';
+                window.location.href = `home.html?usuario=${encodeURIComponent(usuario)}`;
             } else {
-                // Show error message
                 errorMessage.style.display = 'block';
                 document.getElementById('senha').value = '';
             }
-        }
-
-        function showMinhasCompras() {
-            document.getElementById('homeScreen').style.display = 'none';
-            document.getElementById('minhasComprasScreen').style.display = 'flex';
-            renderCompras(compras.slice(0, 2));
-        }
-
-        function handlePesquisarCompras() {
-            const dataPesquisa = document.getElementById('dataPesquisa').value;
-            const resultado = compras.filter((compra) => compra.data === dataPesquisa);
-            renderCompras(resultado);
-        }
-
-        function renderCompras(lista) {
-            const tbody = document.getElementById('tabelaComprasBody');
-            tbody.innerHTML = lista.map((compra) => `
-                <tr>
-                    <td>${compra.produto}</td>
-                    <td>${compra.quantidade}</td>
-                    <td>${formatarData(compra.data)}</td>
-                    <td>${compra.valor}</td>
-                </tr>
-            `).join('');
-        }
-
-        function formatarData(isoDate) {
-            const [ano, mes, dia] = isoDate.split('-');
-            return `${dia}/${mes}/${ano}`;
         }
     </script>
 </body>
