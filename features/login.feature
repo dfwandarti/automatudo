@@ -20,3 +20,11 @@ Feature: Abrir tela de login
   Scenario: Valida tamanho do login
     Given Usuário digitou abcdefghikz no campo login - input user
     Then Input login - input user terá texto abcdefghik
+
+  Scenario: Usuário navega pelo aria snapsht
+    Given Usuário tem estes dados:
+      | chave | valor  |
+      | login | admin  |
+      | senha | admin  |
+      | dia  | 2311974|
+    When Usuário navega até página com título "Compras de um dia"
