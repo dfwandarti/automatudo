@@ -21,9 +21,9 @@ Feature: Abrir tela de login
 
   Scenario: Usuário navega pelo aria snapsht
     Given Usuário tem estes dados:
-      | chave   | valor   |
-      | Usuário | admin   |
-      | senha   | admin   |
-      | dia     | 2311974 |
+      | chave   | valor      |
+      | Usuário | admin      |
+      | senha   | admin      |
+      | dia     | 1974-11-23 |
     When Usuário navega até página com título "Compras de um dia"
     Then Usuário verá o título "Compras de um dia" na página

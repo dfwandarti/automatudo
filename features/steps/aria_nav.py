@@ -1,7 +1,7 @@
 import logging
 import re
 
-from behave import given, when
+from behave import given, then, when
 
 from python.flowchart.parser import FlowchartTree
 
@@ -41,6 +41,12 @@ def step_navega(context, titulo):
         rotulo_botao = _rotulo_transicao(no_atual, transicao.node)
         _clicar_botao_com_retry(context.page, rotulo_botao)
         _aguardar_tela_com_retry(context.page, transicao.node.label)
+
+
+@then('Usuário verá o título "{titulo}" na página')
+def step_verifica_titulo(context, titulo):
+    tela_atual = _ler_titulo_tela(context.page)
+    assert tela_atual == titulo, f"Esperava título '{titulo}' na página, mas encontrado '{tela_atual}'"
 
 
 def _preencher_campos_tela(page, form_filling: dict) -> None:
