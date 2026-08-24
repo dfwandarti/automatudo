@@ -28,3 +28,9 @@ def step_impl(context: behave.runner.Context, display_name: str, expected_text: 
     field: PageField = PageFieldFactory.from_display_name(context.page, display_name)
     actual_text: str | None = field.get_input_text()
     assert expected_text == actual_text, f"Expected text '{expected_text}' does not match actual text '{actual_text}' in field '{display_name}'"
+
+@Then("Usuário verá o texto {expected_text}")
+def looksForText(context: behave.runner.Context, expected_text: str):
+    page = context.page
+    actual_text = page.inner_text("body")
+    assert expected_text in actual_text, f"Expected text '{expected_text}' not found in page content"

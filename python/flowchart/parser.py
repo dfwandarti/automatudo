@@ -4,6 +4,7 @@ from __future__ import annotations
 import logging
 import re
 import sys
+from collections import deque
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -95,6 +96,39 @@ class FlowchartTree:
             node.label = label
 
         return node
+
+    def find_by_label(self, label: str) -> Node | None:
+        for node in self.nodes.values():
+            if node.label == label:
+                return node
+        return None
+
+    def root(self) -> Node:
+        roots = [node for node in self.nodes.values() if not node.predecessors]
+        if len(roots) != 1:
+            raise FlowchartParseError(
+                f"Esperava exatamente 1 nó raiz (sem predecessors), encontrado {len(roots)}"
+            )
+        return roots[0]
+
+    def path(self, source: Node, target: Node) -> list[Transition]:
+        if source is target:
+            return []
+
+        visited = {source.id}
+        queue: deque[tuple[Node, list[Transition]]] = deque([(source, [])])
+        while queue:
+            node, transitions = queue.popleft()
+            for transition in node.successors:
+                if transition.node.id in visited:
+                    continue
+                new_transitions = transitions + [transition]
+                if transition.node is target:
+                    return new_transitions
+                visited.add(transition.node.id)
+                queue.append((transition.node, new_transitions))
+
+        raise FlowchartParseError(f"Não há caminho de '{source.label}' até '{target.label}' no flowchart")
 
 
 def _print_tree(tree: FlowchartTree) -> None:
