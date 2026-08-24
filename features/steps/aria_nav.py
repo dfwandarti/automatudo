@@ -106,7 +106,9 @@ def _clicar_botao_com_retry(page, rotulo: str) -> None:
     ultimo_erro = None
     for tentativa in range(1, MAX_TENTATIVAS_BOTAO + 1):
         try:
-            page.get_by_role("button", name=rotulo, exact=True).click(timeout=3000)
+            clickable = _get_clickable(page, rotulo)
+            if clickable is not None:
+                clickable.click(timeout=3000)
             return
         except Exception as e:
             ultimo_erro = e
@@ -117,6 +119,13 @@ def _clicar_botao_com_retry(page, rotulo: str) -> None:
             page.wait_for_timeout(ESPERA_ENTRE_TENTATIVAS_MS)
     raise AssertionError(f"Botão '{rotulo}' não encontrado após {MAX_TENTATIVAS_BOTAO} tentativas: {ultimo_erro}")
 
+def _get_clickable(page, rotulo: str):
+    padrao = re.compile(re.escape(rotulo), re.IGNORECASE)
+    for role in ("button", "link", "menuitem", "tab", "treeitem"):
+        clickable = page.get_by_role(role, name=padrao)
+        if clickable.count() > 0:
+            return clickable.first
+    return None
 
 def _aguardar_tela_com_retry(page, titulo_esperado: str) -> None:
     tela_atual = None

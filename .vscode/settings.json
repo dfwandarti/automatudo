@@ -35,6 +35,8 @@
         "suppressMultiConfig-self",
         "suppressedNotifications-from-behavevsc",
         "envVarPresets-from-behavevsc",
-        "envVarOverrides-from-behavevsc"
+        "envVarOverrides-from-behavevsc",
+        "verboseLogging-self",
+        "xRay-self"
     ]
 }
