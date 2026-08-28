@@ -1,20 +1,6 @@
-import logging
-import re
-
 from behave import given, then, when
 
-from python.flowchart.parser import FlowchartTree
 from python.aria_graph.aria_graph_engine import AriaGraphEngine
-
-FLOWCHART_PATH = "LOGIN_FLOW.md"
-MAX_TENTATIVAS_BOTAO = 3
-MAX_TENTATIVAS_TELA = 3
-ESPERA_ENTRE_TENTATIVAS_MS = 1000
-PAPEIS_ARIA_PREENCHIVEIS = (
-    "textbox", "searchbox", "spinbutton",
-    "checkbox", "radio",
-    "combobox", "listbox", "option",
-)
 
 
 @given("Usuário tem estes dados:")
