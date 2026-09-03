@@ -5,7 +5,7 @@ from playwright.sync_api import Locator, Page
 
 from python.aria_graph import aria_graph_custom
 from python.flowchart.parser import FlowchartTree, Node, Transition
-
+from python.aria_graph.aria_graph_custom import AriaGraphCustomBase, HookFunction, HookArguments
 
 class AriaGraphEngine:
     FLOWCHART_PATH: str = "LOGIN_FLOW.md"
@@ -17,34 +17,68 @@ class AriaGraphEngine:
         "checkbox", "radio",
         "combobox", "listbox", "option",
     ]
+    CLICKABLE_ARIA_ROLES: list[str] = [
+        "button", "link", "menuitem", "tab", "treeitem"
+    ]
 
     _page: Page
     _form_filling: dict[str, str]
+    _aria_graph_custom: AriaGraphCustomBase
 
-    def __init__(self, page: Page, form_filling: dict[str, str]) -> None:
+    def __init__(self, page: Page, form_filling: dict[str, str], aria_graph_custom: AriaGraphCustomBase) -> None:
         self._page = page
         self._form_filling = form_filling
+        self._aria_graph_custom = aria_graph_custom
 
     def loop_until_reaches_end_of_flow(self, route_node_label: str) -> None:
+        path = self._find_path(route_node_label)
+
+        for transition in path:
+            self.handle_one_screen(transition)
+            
+        self._handle_last_screen(path[-1].node)
+
+    def _find_path(self, route_node_label):
         tree: FlowchartTree = FlowchartTree.from_file(self.FLOWCHART_PATH)
-        aria_graph_custom.navigate_to_initial_page(self._page)
+        self._aria_graph_custom.navigate_to_initial_page(self._page)
 
         destination: Node | None = tree.find_by_label(route_node_label)
         if destination is None:
             raise AssertionError(f"Node with title '{route_node_label}' not found in {self.FLOWCHART_PATH}")
 
         path: list[Transition] = tree.path(tree.root(), destination)
+        return path
 
-        for transition in path:
-            current_node: Node = transition.node
+    def _handle_last_screen(self, last_node: Node) -> None:
+        self._fillform()
+        self._call_hook_if_exists(self._aria_graph_custom.get_hook_before_navigation(), last_node)
 
-            aria_graph_custom.hook_fillform_before(current_node, self._page, self._form_filling)
-            self._fillform()
+    def handle_one_screen(self, transition: Transition):
+        current_node: Node = transition.node
+        button_label: str = transition.label
+        
+        if button_label == "HOOK":
+            called_hook: bool = self._call_hook_if_exists(self._aria_graph_custom.get_handle_transition(), current_node)
+            if not called_hook: raise AssertionError(f"Didn't find a hook for transition with label 'HOOK' and node label '{current_node.label}'. Check you implementation of AriaGraphCustomBase.")
+            return
+        
+        self._fillform()
 
-            button_label: str = transition.label
-            self._clickable_with_retry(button_label)
-            self._wait_for_screen_with_retry(transition.node.label)
-            aria_graph_custom.hook_fillform_after(current_node, self._page, self._form_filling)
+        self._call_hook_if_exists(self._aria_graph_custom.get_hook_before_navigation(), current_node)
+        
+        self._clickable_with_retry(button_label)
+        self._wait_for_screen_with_retry(transition.node.label)
+            
+        self._call_hook_if_exists(self._aria_graph_custom.get_hook_after_navigation(), current_node)
+
+    def _call_hook_if_exists(self, dict_of_hooks: dict[str, HookFunction], current_node: Node) -> bool:
+        if current_node.label not in dict_of_hooks:
+            return False
+        
+        hook_before: HookFunction = dict_of_hooks[current_node.label]
+        args: HookArguments = HookArguments(self._page, current_node, self._form_filling)
+        hook_before(args)
+        return True
 
     def _fillform(self) -> None:
         key: str
@@ -108,7 +142,7 @@ class AriaGraphEngine:
     def _get_clickable(self, label: str) -> Locator | None:
         pattern: re.Pattern[str] = re.compile(re.escape(label), re.IGNORECASE)
         role: str
-        for role in ("button", "link", "menuitem", "tab", "treeitem"):
+        for role in self.CLICKABLE_ARIA_ROLES:
             clickable: Locator = self._page.get_by_role(role, name=pattern)
             if clickable.count() > 0:
                 return clickable.first
