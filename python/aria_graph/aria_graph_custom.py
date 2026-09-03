@@ -14,9 +14,9 @@ class HookArguments:
     
 HookFunction: TypeAlias = Callable[[HookArguments], bool]
     
-class AriaGraphCustomBase:
+class AriaGraphCustomBase(ABC):
     @abstractmethod
-    def navigate_to_initial_page(self, page) -> None:
+    def navigate_to_initial_page(self, page: Page) -> None:
         pass
     
     @abstractmethod
