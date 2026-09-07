@@ -46,7 +46,7 @@ class FormFiller:
 
     def _fill_form_aggressive(self) -> None:
         for role in self.FILLABLE_ARIA_ROLES:
-            locator: Locator = self._page.get_by_role(role)            
+            locator: Locator = self._page.get_by_role(role)
             for element in locator.all():
                 possible_name: str = self._build_possible_name(element)
                 matched_key: str | None = self._match_key(possible_name)
@@ -80,7 +80,8 @@ class FormFiller:
     def _get_label_text(self, element: Locator) -> str | None:
         element_id: str | None = element.get_attribute("id")
         if element_id:
-            label_for: Locator = self._page.locator(f'label[for="{element_id}"]')
+            label_for: Locator = self._page.locator(
+                f'label[for="{element_id}"]')
             if label_for.count() > 0:
                 text: str | None = label_for.first.text_content()
                 if text:
@@ -126,7 +127,8 @@ class FormFiller:
         elif role == "option":
             element.click()
         else:
-            logging.warning("ARIA role '%s' not supported for automatic filling", role)
+            logging.warning(
+                "ARIA role '%s' not supported for automatic filling", role)
 
     @staticmethod
     def _is_truthy_value(value: str) -> bool:
@@ -147,7 +149,8 @@ class HookDispatcher:
             return False
 
         hook: HookFunction = dict_of_hooks[current_node.label]
-        args: HookArguments = HookArguments(self._page, current_node, self._form_filling)
+        args: HookArguments = HookArguments(
+            self._page, current_node, self._form_filling)
         hook(args)
         return True
 
@@ -168,10 +171,10 @@ class AriaGraphEngine:
     _hook_dispatcher: HookDispatcher
     _find_field_mode: FindFieldMode
 
-    def __init__(self, 
-                 page: Page, 
-                 form_filling: dict[str, str], 
-                 aria_graph_custom: AriaGraphCustomBase, 
+    def __init__(self,
+                 page: Page,
+                 form_filling: dict[str, str],
+                 aria_graph_custom: AriaGraphCustomBase,
                  flowchart_path: str = "LOGIN_FLOW.md",
                  find_field_mode: FindFieldMode = FindFieldMode.MODERATE) -> None:
         self._page = page
@@ -195,32 +198,39 @@ class AriaGraphEngine:
 
         destination: Node | None = tree.find_by_label(route_node_label)
         if destination is None:
-            raise AssertionError(f"Node with title '{route_node_label}' not found in {self._flowchart_path}")
+            raise AssertionError(
+                f"Node with title '{route_node_label}' not found in {self._flowchart_path}")
 
         path: list[Transition] = tree.path(tree.root(), destination)
         return path
 
     def _handle_last_screen(self, last_node: Node) -> None:
-        self._form_filler.fill_form(find_field_mode = self._find_field_mode)
-        self._hook_dispatcher.call_hook_if_exists(self._aria_graph_custom.get_hook_before_navigation(), last_node)
+        self._form_filler.fill_form(find_field_mode=self._find_field_mode)
+        self._hook_dispatcher.call_hook_if_exists(
+            self._aria_graph_custom.get_hook_before_navigation(), last_node)
 
     def _handle_one_screen(self, transition: Transition):
         current_node: Node = transition.node
         button_label: str = transition.label
 
         if button_label == self.HOOK_TRANSITION_LABEL:
-            called_hook: bool = self._hook_dispatcher.call_hook_if_exists(self._aria_graph_custom.get_handle_transition(), current_node)
-            if not called_hook: raise AssertionError(f"Didn't find a hook for transition with label 'HOOK' and node label '{current_node.label}'. Check you implementation of AriaGraphCustomBase.")
+            called_hook: bool = self._hook_dispatcher.call_hook_if_exists(
+                self._aria_graph_custom.get_handle_transition(), current_node)
+            if not called_hook:
+                raise AssertionError(
+                    f"Didn't find a hook for transition with label 'HOOK' and node label '{current_node.label}'. Check you implementation of AriaGraphCustomBase.")
             return
 
-        self._form_filler.fill_form(find_field_mode = self._find_field_mode)
+        self._form_filler.fill_form(find_field_mode=self._find_field_mode)
 
-        self._hook_dispatcher.call_hook_if_exists(self._aria_graph_custom.get_hook_before_navigation(), current_node)
+        self._hook_dispatcher.call_hook_if_exists(
+            self._aria_graph_custom.get_hook_before_navigation(), current_node)
 
         self._clickable_with_retry(button_label)
         self._wait_for_screen_with_retry(transition.node.label)
 
-        self._hook_dispatcher.call_hook_if_exists(self._aria_graph_custom.get_hook_after_navigation(), current_node)
+        self._hook_dispatcher.call_hook_if_exists(
+            self._aria_graph_custom.get_hook_after_navigation(), current_node)
 
     def _clickable_with_retry(self, label: str) -> None:
         last_error: Exception | None = None
@@ -238,10 +248,12 @@ class AriaGraphEngine:
                     attempt, self.MAX_BUTTON_ATTEMPTS, label, e,
                 )
                 self._page.wait_for_timeout(self.WAIT_BETWEEN_ATTEMPTS_MS)
-        raise AssertionError(f"Button '{label}' not found after {self.MAX_BUTTON_ATTEMPTS} attempts: {last_error}")
+        raise AssertionError(
+            f"Button '{label}' not found after {self.MAX_BUTTON_ATTEMPTS} attempts: {last_error}")
 
     def _get_clickable(self, label: str) -> Locator | None:
-        pattern: re.Pattern[str] = FormFiller._build_case_insensitive_pattern(label)
+        pattern: re.Pattern[str] = FormFiller._build_case_insensitive_pattern(
+            label)
         for role in self.CLICKABLE_ARIA_ROLES:
             clickable: Locator = self._page.get_by_role(role, name=pattern)
             if clickable.count() > 0:
@@ -260,9 +272,11 @@ class AriaGraphEngine:
                 current_screen, expected_title, attempt, self.MAX_SCREEN_ATTEMPTS,
             )
             self._page.wait_for_timeout(self.WAIT_BETWEEN_ATTEMPTS_MS)
-        raise AssertionError(f"Expected to reach screen '{expected_title}' but currently at '{current_screen}'")
+        raise AssertionError(
+            f"Expected to reach screen '{expected_title}' but currently at '{current_screen}'")
 
     def _read_screen_title(self) -> str:
         title: str = self._page.title()
-        heading_text: str = self._page.get_by_role("heading", level=1).inner_text().strip()
+        heading_text: str = self._page.get_by_role(
+            "heading", level=1).inner_text().strip()
         return f"{title} / {heading_text}"
