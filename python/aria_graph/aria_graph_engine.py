@@ -286,6 +286,8 @@ class AriaGraphEngine:
 
     def _read_screen_title(self) -> str:
         title: str = self._page.title()
-        heading_text: str = self._page.get_by_role(
-            "heading", level=1).inner_text().strip()
-        return f"{title} / {heading_text}"
+        if self._page.get_by_role("heading", level=1).count() > 1:
+            heading_text: str = self._page.get_by_role(
+                "heading", level=1).first.inner_text()
+            return f"{title} / {heading_text}".strip()
+        return f"{title}".strip()
