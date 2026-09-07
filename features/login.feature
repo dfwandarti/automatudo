@@ -19,7 +19,7 @@ Feature: Abrir tela de login
     Given Usuário digitou abcdefghikz no campo login - input user
     Then Input login - input user terá texto abcdefghik
 
-  Scenario: Usuário navega pelo aria snapsht
+  Scenario: Usuário navega pelo aria snapshot
     Given Usuário tem estes dados:
       | chave   | valor      |
       | Usuário | admin      |
