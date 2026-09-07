@@ -34,6 +34,7 @@ class FormFiller:
             self._fill_form_moderate()
         else:
             self._fill_form_aggressive()
+        self._page.keyboard.press("Tab")  # Move focus to the next field after filling
 
     def _fill_form_moderate(self) -> None:
         for key, value in self._form_filling.items():
@@ -127,12 +128,13 @@ class FormFiller:
         elif role == "radio":
             element.check()
         elif role in ("combobox", "listbox"):
+            element.fill(value)
             element.select_option(value)
         elif role == "option":
             element.click()
         else:
             logging.warning(
-                "ARIA role '%s' not supported for automatic filling", role)
+                "ARIA role '%s' not supported for automatic filling", role)        
 
     @staticmethod
     def _is_truthy_value(value: str) -> bool:

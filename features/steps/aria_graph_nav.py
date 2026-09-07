@@ -11,7 +11,7 @@ def save_data_to_form_filling(context):
     context.aria_graph = AriaGraphEngine(
         context.page, form_filling, 
         aria_graph_custom, 
-        find_field_mode=FindFieldMode.MODERATE,
+        find_field_mode=FindFieldMode.AGGRESSIVE,
         validate_page_name=ValidatePageName.NO)
 
 
