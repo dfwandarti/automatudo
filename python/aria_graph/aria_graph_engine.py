@@ -13,6 +13,10 @@ class FindFieldMode(str, Enum):
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
 
+class ValidatePageName(str, Enum):
+    NO = "no"
+    YES = "yes"
+
 
 class FormFiller:
     FILLABLE_ARIA_ROLES: list[str] = [
@@ -170,19 +174,22 @@ class AriaGraphEngine:
     _form_filler: FormFiller
     _hook_dispatcher: HookDispatcher
     _find_field_mode: FindFieldMode
+    _validate_page_name: ValidatePageName
 
     def __init__(self,
                  page: Page,
                  form_filling: dict[str, str],
                  aria_graph_custom: AriaGraphCustomBase,
                  flowchart_path: str = "LOGIN_FLOW.md",
-                 find_field_mode: FindFieldMode = FindFieldMode.MODERATE) -> None:
+                 find_field_mode: FindFieldMode = FindFieldMode.MODERATE,
+                 validate_page_name: ValidatePageName = ValidatePageName.YES) -> None:
         self._page = page
         self._aria_graph_custom = aria_graph_custom
         self._flowchart_path = flowchart_path
         self._form_filler = FormFiller(page, form_filling)
         self._hook_dispatcher = HookDispatcher(page, form_filling)
         self._find_field_mode = find_field_mode
+        self._validate_page_name = validate_page_name
 
     def loop_until_reaches_end_of_flow(self, route_node_label: str) -> None:
         self._aria_graph_custom.navigate_to_initial_page(self._page)
@@ -272,8 +279,10 @@ class AriaGraphEngine:
                 current_screen, expected_title, attempt, self.MAX_SCREEN_ATTEMPTS,
             )
             self._page.wait_for_timeout(self.WAIT_BETWEEN_ATTEMPTS_MS)
-        raise AssertionError(
-            f"Expected to reach screen '{expected_title}' but currently at '{current_screen}'")
+        
+        if (self._validate_page_name == ValidatePageName.YES):
+            raise AssertionError(
+                f"Expected to reach screen '{expected_title}' but currently at '{current_screen}'")
 
     def _read_screen_title(self) -> str:
         title: str = self._page.title()

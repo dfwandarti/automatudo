@@ -1,6 +1,6 @@
 from behave import given, then, when
 
-from python.aria_graph.aria_graph_engine import AriaGraphEngine, FindFieldMode
+from python.aria_graph.aria_graph_engine import AriaGraphEngine, FindFieldMode, ValidatePageName
 from python.aria_graph.aria_graph_custom import AriaGraphCustomImpl
 
 
@@ -9,7 +9,10 @@ def save_data_to_form_filling(context):
     form_filling: dict = {row["chave"]: row["valor"] for row in context.table}
     aria_graph_custom: AriaGraphCustomImpl = AriaGraphCustomImpl()
     context.aria_graph = AriaGraphEngine(
-        context.page, form_filling, aria_graph_custom, find_field_mode=FindFieldMode.MODERATE)
+        context.page, form_filling, 
+        aria_graph_custom, 
+        find_field_mode=FindFieldMode.MODERATE,
+        validate_page_name=ValidatePageName.NO)
 
 
 @when('Usuário navega até página com título "{titulo}"')
